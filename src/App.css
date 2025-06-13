@@ -1,0 +1,270 @@
+
+.App {
+  text-align: center;
+  /* background: url('https://img.freepik.com/free-photo/paper-bags-different-colors-blue-background-top-view_169016-43755.jpg?ga=GA1.1.1711038253.1738155328&semt=ais_hybrid');
+  background-size:cover; */
+}
+
+.bg-img {
+  /* background: url('https://img.freepik.com/free-photo/paper-bags-different-colors-blue-background-top-view_169016-43755.jpg?ga=GA1.1.1711038253.1738155328&semt=ais_hybrid'); */
+  /* background: url('../public/images/b3.jpg'); */
+  background: linear-gradient(135deg, #4e5fd2, #d1425a,#9f1aac);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bg-img-login {
+  /* background: url('https://img.freepik.com/free-photo/paper-bags-different-colors-blue-background-top-view_169016-43755.jpg?ga=GA1.1.1711038253.1738155328&semt=ais_hybrid'); */
+  background: url('../public/images/b3.jpg');
+  background: linear-gradient(135deg, #4e5fd2, #d1425a,#9f1aac);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 100px;
+  padding-bottom: 150px;
+}
+
+/* Style for the banner container */
+.sec-banner {
+  background-color: #f8f9fa;
+  padding-top: 80px;
+  padding-bottom: 50px;
+}
+
+/* Block styling */
+.block1 {
+  position: relative;
+  overflow: hidden;
+}
+
+.block1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Initially hide the text and button */
+.block1-txt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1;
+}
+
+.block1-txt h5,
+.block1-txt p {
+  margin: 0;
+}
+
+.block1-txt button {
+  margin-top: 15px;
+}
+
+/* Hover effect on the image */
+.block1:hover .img-fluid {
+  transform: scale(1.1);
+  filter: brightness(0.4)
+    /* Slight zoom effect */
+}
+
+/* Show caption and 'Shop Now' button on hover */
+.block1:hover .block1-txt {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Button styling */
+.block1-txt button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.block1-txt button:hover {
+  background-color: #0056b3;
+}
+
+.product-img  {
+  transform: scale(1);
+  /* background-color: #1995AD; */
+  /* border: 2px #007bff  solid; */
+}
+.product-img:hover{
+  transform: scale(1.5);
+  transition: 1000ms;
+}
+
+.btn-bg {
+  background-color: #1995AD;
+  color: #0056b3;
+}
+
+.product-text {
+  background-color: #AAABB8;
+}
+
+.cont {
+  text-align: center;
+  /* background-color: #007bff; */
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  background-color: darkgray;
+  
+}
+
+.toggle__input {
+  display: none;
+}
+
+.toggle__label {
+  display: block;
+  width: 60px;
+  height: 30px;
+  background-color: var(--toggle-light);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dark-mode .toggle__label {
+  background-color: var(--toggle-dark);
+}
+
+.toggle__input:checked+.toggle__label::after {
+  left: 32px;
+}
+
+.toggle__label::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 26px;
+  background-color: #170909;
+  border-radius: 50%;
+  transition: left 0.3s ease;
+}
+.slow-spinner {
+  animation-duration: 2s !important;
+}
+.slow-spinner1 {
+  animation-duration: 3s !important;
+}
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #797fa2, #6e629f,#969ac7);
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Bubble animation */
+.bubbles {
+  position: relative;
+  display: flex;
+  gap: 10px;
+}
+
+.bubbles span {
+  width: 20px;
+  height: 20px;
+  background: rgb(23, 27, 71);
+  border-radius: 50%;
+  opacity: 1;
+  animation: bubbleAnimation 1s infinite ease-in-out;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+
+/* Bubble floating animation */
+@keyframes bubbleAnimation {
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+}
+
+/* Loading text */
+.loading-text {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: rgb(14, 2, 2);
+  font-weight: bold;
+}
+
+.nav-img-card {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  background: #fff;
+  border: 1px solid #eee;
+  margin-right: 6px;
+  vertical-align: middle;
+  transition: box-shadow 0.3s;
+}
+
+.nav-hover {
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  border-radius: 16px !important;
+  padding: 6px 18px !important;
+}
+
+.nav-hover:hover, .nav-hover.active {
+  background: linear-gradient(135deg, #f8fafc 60%, #e0e7ef 100%);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transform: scale(1.06);
+  color: #0d6efd !important;
+  text-decoration: none !important;
+}
+
+
+
+/* ========= */
+.hero-slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 270px;
+  width: 100%;
+}
+
+.slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

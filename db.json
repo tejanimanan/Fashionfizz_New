@@ -1,0 +1,284 @@
+{
+  "products": [
+    {
+      "id": "2",
+      "category": "Women Clothing",
+      "name": "Slim Fit Shirt",
+      "description": "A pair of slim fit jeans in a classic blue denim wash.",
+      "price": 39.99,
+      "size": [
+        "28",
+        "30",
+        "32",
+        "34"
+      ],
+      "color": [
+        "Blue",
+        "Black"
+      ],
+      "image": "/images/product-02.jpg"
+    },
+    {
+      "id": "3",
+      "category": "Men Shirt",
+      "name": "High Shirt",
+      "description": "Elegant high heels with a comfortable fit for any occasion.",
+      "price": 49.99,
+      "size": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "color": [
+        "Black",
+        "Red",
+        "Gold"
+      ],
+      "image": "/images/product-03.jpg"
+    },
+    {
+      "id": "4",
+      "category": "Men Shoes",
+      "name": "Leather Boots",
+      "description": "Stylish leather boots that are durable and perfect for cold weather.",
+      "price": 79.99,
+      "size": [
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "color": [
+        "Brown",
+        "Black"
+      ],
+      "image": "/images/product-09.jpg"
+    },
+    {
+      "id": "5",
+      "category": "Bag",
+      "name": "Women Staylish Bag",
+      "description": "A spacious Women bag that’s perfect for work or a weekend outing.",
+      "price": 34.99,
+      "material": "Canvas",
+      "color": [
+        "Beige",
+        "Pink",
+        "Navy"
+      ],
+      "image": "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d29tZW4lMjBiYWd8ZW58MHx8MHx8fDA%3D"
+    },
+    {
+      "id": "6",
+      "category": "Bag",
+      "name": "Leptop Bag",
+      "description": "A stylish Leptop bag with multiple compartments for easy access.",
+      "price": 59.99,
+      "material": "Leather",
+      "color": [
+        "Black",
+        "Brown"
+      ],
+      "image": "https://media.istockphoto.com/id/1460844436/photo/modern-businessman.webp?a=1&b=1&s=612x612&w=0&k=20&c=G8R1QYYPhrMWQTR5J-m3reNUqvxwiOQm6W8zdrSq-Dg="
+    },
+    {
+      "id": "7",
+      "category": "Women Clothing",
+      "name": "Sweater Dress",
+      "description": "A cozy sweater dress that can be styled for both casual and formal events.",
+      "price": 39.99,
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "color": [
+        "Gray",
+        "Black",
+        "White"
+      ],
+      "image": "/images/product-07.jpg"
+    },
+    {
+      "id": "8",
+      "category": "Men Clothing",
+      "name": "Polo TShirt",
+      "description": "A classic polo shirt made from breathable cotton fabric.",
+      "price": 24.99,
+      "size": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "color": [
+        "Navy",
+        "White",
+        "Red"
+      ],
+      "image": "https://images.unsplash.com/photo-1604006852748-903fccbc4019?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBvbG8lMjBzaGlydHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "id": "9",
+      "category": "Women ",
+      "name": "Long dress",
+      "description": "Comfortable and stylish kurti flats that go for any function.",
+      "price": 29.99,
+      "size": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "color": [
+        "Black",
+        "Pink",
+        "Nude"
+      ],
+      "image": "https://images.unsplash.com/photo-1604436607823-d721dfe2df46?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d29tZW4lMjBjbG90aHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "id": "10",
+      "category": "Men Shoes",
+      "name": "Running Sneakers",
+      "description": "Lightweight running sneakers designed for comfort and performance.",
+      "price": 69.99,
+      "size": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "color": [
+        "Gray",
+        "Blue",
+        "Black"
+      ],
+      "image": "https://images.unsplash.com/photo-1563535708875-ddec13a419b5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFJ1bm5pbmclMjBTbmVha2Vyc3xlbnwwfHwwfHx8MA%3D%3D"
+    }
+  ],
+  "cart": [
+    {
+      "id": "0857",
+      "productId": "4",
+      "userId": "c961",
+      "price": 79.99,
+      "quantity": 1,
+      "name": "Leather Boots",
+      "size": [
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "color": [
+        "Brown",
+        "Black"
+      ],
+      "image": "/images/product-09.jpg"
+    },
+    {
+      "id": "e420",
+      "productId": "4",
+      "userId": "c961",
+      "price": 79.99,
+      "quantity": 1,
+      "name": "Leather Boots",
+      "size": [
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "color": [
+        "Brown",
+        "Black"
+      ],
+      "image": "/images/product-09.jpg"
+    },
+    {
+      "id": "2e77",
+      "productId": "8",
+      "userId": "c961",
+      "price": 24.99,
+      "quantity": 1,
+      "name": "Polo TShirt",
+      "size": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "color": [
+        "Navy",
+        "White",
+        "Red"
+      ],
+      "image": "https://images.unsplash.com/photo-1604006852748-903fccbc4019?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBvbG8lMjBzaGlydHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "id": "8523",
+      "productId": "3",
+      "userId": "c961",
+      "price": 49.99,
+      "quantity": 1,
+      "name": "High Shirt",
+      "size": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "color": [
+        "Black",
+        "Red",
+        "Gold"
+      ],
+      "image": "/images/product-03.jpg"
+    },
+    {
+      "id": "0c91",
+      "productId": "3",
+      "userId": "c961",
+      "price": 49.99,
+      "quantity": 1,
+      "name": "High Shirt",
+      "size": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "color": [
+        "Black",
+        "Red",
+        "Gold"
+      ],
+      "image": "/images/product-03.jpg"
+    }
+  ],
+  "user": [
+    {
+      "id": "99c1",
+      "name": "Llewellyn Connelly",
+      "email": "your12@gmail.com",
+      "password": "123123@",
+      "phone": "139-268-0340",
+      "address": "5793 Fisher Divide"
+    },
+    {
+      "id": "c961",
+      "name": "manan",
+      "email": "manan12@gmail.com",
+      "password": "123123$",
+      "phone": "09897987989",
+      "address": "bhavnagar"
+    }
+  ]
+}
