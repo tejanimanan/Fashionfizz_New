@@ -46,7 +46,7 @@ export default function NavBar() {
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {['/', '/shop', '/about', '/contact'].map((path, index) => {
-                const labels = ['Home12', 'Shop', 'About', 'Contact'];
+                const labels = ['Home', 'Shop', 'About', 'Contact'];
                 return (
                   <li className="nav-item" key={path}>
                     <NavLink
@@ -54,7 +54,7 @@ export default function NavBar() {
                       className="nav-link btn fs-4 ms-4"
                       style={({ isActive }) => ({
                         color: isActive ? '#ffffff' : '#ffd700',
-                        fontFamily: isActive ? 'cursive' : 'fantasy',
+                        fontFamily: isActive ? 'cursive' : 'Playfair Display',
                       })}
                       onClick={closeMenu}
                     >
