@@ -46,7 +46,7 @@ export default function NavBar() {
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {['/', '/shop', '/about', '/contact'].map((path, index) => {
-                const labels = ['Home', 'Shop', 'About', 'Contact'];
+                const labels = ['Home12', 'Shop', 'About', 'Contact'];
                 return (
                   <li className="nav-item" key={path}>
                     <NavLink
