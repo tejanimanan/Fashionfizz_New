@@ -5,9 +5,13 @@ import Footer from './Footer';
 import { Bounce, Slide, toast, ToastContainer } from 'react-toastify';
 import { FaTrash } from 'react-icons/fa';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, updateCartItemQuantity, removeCartItem, clearUserCart } from '../redux/cartSlice';
+import { api } from '../services/api';
 
 export default function Cart() {
-    const [product, SetProduct] = useState([]);
+    const dispatch = useDispatch();
+    const { items: product, status, error } = useSelector((state) => state.cart);
     const [cartQuantities, SetCartQuantities] = useState({});
     const [showOrderModal, setShowOrderModal] = useState(false);
     const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -15,28 +19,14 @@ export default function Cart() {
     const [user, setUser] = useState(null);
     const userId = localStorage.getItem('userId');
     const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL;
 
     // Load cart items and user data when component is mounted
     useEffect(() => {
         if (userId) {
-            // Fetch cart items
-            fetch(`${API_URL}cart`)
-                .then((res) => res.json())
-                .then((data) => {
-                    const userCartItems = data.filter((cartItem) => cartItem.userId === userId);
-                    SetProduct(userCartItems);
-
-                    const initialQuantities = {};
-                    userCartItems.forEach(item => {
-                        initialQuantities[item.id] = item.quantity || 1;
-                    });
-                    SetCartQuantities(initialQuantities);
-                });
+            dispatch(fetchCart(userId));
 
             // Fetch user data for address
-            fetch(`${API_URL}user/${userId}`)
-                .then(res => res.json())
+            api.getUserById(userId)
                 .then(data => {
                     setUser(data);
                     setDeliveryAddress(data.address || '');
@@ -49,24 +39,30 @@ export default function Cart() {
             toast.error('Please log in first');
             navigate('/login');
         }
-    }, [userId, navigate]);
+    }, [userId, navigate, dispatch]);
+
+    // Update local quantities state when Redux cart items change
+    useEffect(() => {
+        const initialQuantities = {};
+        product.forEach(item => {
+            initialQuantities[item.id] = item.quantity || 1;
+        });
+        SetCartQuantities(initialQuantities);
+    }, [product]);
 
     // Handle increment and decrement of product quantity
     const handleQuantityChange = (id, increment) => {
-        const newQuantities = { ...cartQuantities };
-        newQuantities[id] = newQuantities[id] + (increment ? 1 : -1);
+        const currentQuantity = cartQuantities[id];
+        let newQuantity = currentQuantity + (increment ? 1 : -1);
 
-        if (newQuantities[id] < 1) {
-            newQuantities[id] = 1;
+        if (newQuantity < 1) {
+            newQuantity = 1;
         }
 
-        SetCartQuantities(newQuantities);
-
-        fetch(`${API_URL}cart/` + id, {
-            method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...product.find(p => p.id === id), quantity: newQuantities[id] }),
-        });
+        const itemToUpdate = product.find(p => p.id === id);
+        if (itemToUpdate) {
+            dispatch(updateCartItemQuantity({ itemId: id, quantity: newQuantity, currentItem: itemToUpdate }));
+        }
     };
 
     // Calculate the total price of the cart
@@ -78,27 +74,21 @@ export default function Cart() {
     };
 
     const Ondelete = (id) => {
-        SetProduct(product.filter((v) => v.id !== id))
-        fetch(`${API_URL}cart/` + id, {
-            method: 'DELETE',
-        }).then((res) => {
-            if (res) {
-                toast.error('🦄 Product removed from cart!', {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                    transition: Slide,
-                });
-            }
+        dispatch(removeCartItem(id));
+        toast.error('🦄 Product removed from cart!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Slide,
         });
     };
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = async () => {
         if (!deliveryAddress.trim()) {
             toast.error('Please enter delivery address');
             return;
@@ -108,7 +98,7 @@ export default function Cart() {
         const order = {
             userId: userId,
             items: product.map(item => ({
-                productId: item.id,
+                productId: item.productId,
                 name: item.name,
                 image: item.image,
                 quantity: cartQuantities[item.id],
@@ -121,51 +111,54 @@ export default function Cart() {
             orderDate: new Date().toISOString()
         };
 
-        // Save order to database
-        fetch(`${API_URL}orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(order)
-        })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error('Failed to place order');
+        try {
+            const response = await api.addOrder(order);
+            if (response) {
+                await dispatch(clearUserCart(userId));
+                toast.success('Order placed successfully!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Slide,
+                });
+
+                setShowOrderModal(false);
+                navigate('/profile');
+            } else {
+                toast.error('Failed to place order. Please try again.');
             }
-            return res.json();
-        })
-        .then(() => {
-            // Clear cart after successful order
-            const deletePromises = product.map(item => 
-                fetch(`${API_URL}cart/${item.id}`, {
-                    method: 'DELETE'
-                })
-            );
-
-            return Promise.all(deletePromises);
-        })
-        .then(() => {
-            toast.success('Order placed successfully!', {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Slide,
-            });
-
-            setShowOrderModal(false);
-            navigate('/profile'); // Redirect to profile page to see order status
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error placing order:', error);
-            toast.error('Failed to place order. Please try again.');
-        });
+            toast.error('Something went wrong. Please try again.');
+        }
     };
+
+    if (status === 'loading') {
+        return (
+            <div className=''>
+                <NavBar />
+                <div className="container py-5 ">
+                    <div>Loading cart...</div>
+                </div>
+            </div>
+        );
+    }
+
+    if (status === 'failed') {
+        return (
+            <div className=''>
+                <NavBar />
+                <div className="container py-5 ">
+                    <div>Error: {error}</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className=''>
@@ -251,29 +244,20 @@ export default function Cart() {
                                     </button>
                                 </div>
                             </div>
-                        </div></>) : (<>
-                            <div className="d-flex justify-content-center align-items-center vh-100 bg-img">
-                                <div className="text-center p-4 border-0 card shadow-sm">
-                                    <img
-                                        src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
-                                        alt="Empty Cart"
-                                        className="img-fluid"
-                                        style={{ maxWidth: "250px" }}
-                                    />
-                                    <h2 className="mt-3">Your Cart is Empty</h2>
-                                    <p className="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                                    <Link to="/" className="btn btn-primary mt-3">Continue Shopping</Link>
-                                </div>
-                            </div>
-                        </>)
+                        </div>
+                        <Link to="/" className="btn btn-secondary mt-3">Continue Shopping</Link>
+                        </>) : (<> <div className='my-5 py-5'>
+                            <h3 className='py-5'>Your Cart Is Empty</h3>
+                            <Link to="/" className='btn btn-primary'>Go To Shop</Link>
+                        </div> </>)
                     }
                 </div>
             </div>
 
-            {/* Order Confirmation Modal */}
-            <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)}>
+            {/* Order Modal */}
+            <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Confirm Your Order</Modal.Title>
+                    <Modal.Title>Place Your Order</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -282,43 +266,38 @@ export default function Cart() {
                             <Form.Control
                                 as="textarea"
                                 rows={3}
+                                placeholder="Enter delivery address"
                                 value={deliveryAddress}
                                 onChange={(e) => setDeliveryAddress(e.target.value)}
-                                placeholder="Enter your delivery address"
                             />
                         </Form.Group>
-
                         <Form.Group className="mb-3">
                             <Form.Label>Payment Method</Form.Label>
-                            <Form.Select
-                                value={paymentMethod}
-                                onChange={(e) => setPaymentMethod(e.target.value)}
-                            >
-                                <option value="cod">Cash on Delivery</option>
-                                <option value="card">Credit/Debit Card</option>
-                                <option value="upi">UPI</option>
-                            </Form.Select>
+                            <div>
+                                <Form.Check
+                                    type="radio"
+                                    label="Cash on Delivery (COD)"
+                                    name="paymentMethod"
+                                    id="cod"
+                                    value="cod"
+                                    checked={paymentMethod === 'cod'}
+                                    onChange={(e) => setPaymentMethod(e.target.value)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="Online Payment (Coming Soon)"
+                                    name="paymentMethod"
+                                    id="online"
+                                    value="online"
+                                    checked={paymentMethod === 'online'}
+                                    onChange={(e) => setPaymentMethod(e.target.value)}
+                                    disabled
+                                />
+                            </div>
                         </Form.Group>
-
-                        <div className="border-top pt-3">
-                            <h5>Order Summary</h5>
-                            <div className="d-flex justify-content-between">
-                                <span>Items ({product.length})</span>
-                                <span>Rs.{calculateTotal()}</span>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                                <span>Discount (10%)</span>
-                                <span>-Rs.{(calculateTotal() * 0.1).toFixed(2)}</span>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                                <span>Delivery</span>
-                                <span className="text-success">Free</span>
-                            </div>
-                            <hr />
-                            <div className="d-flex justify-content-between fw-bold">
-                                <span>Total Amount</span>
-                                <span>Rs.{(calculateTotal() * 0.9).toFixed(2)}</span>
-                            </div>
+                        <div className="d-flex justify-content-between">
+                            <strong>Total Amount:</strong>
+                            <span>Rs.{(calculateTotal() * 0.9).toFixed(2)}</span>
                         </div>
                     </Form>
                 </Modal.Body>
@@ -331,8 +310,6 @@ export default function Cart() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            <Footer />
         </div>
     );
 }

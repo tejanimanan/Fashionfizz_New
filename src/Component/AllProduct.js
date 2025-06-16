@@ -1,75 +1,79 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import { FaEye, FaShoppingCart } from 'react-icons/fa'
 import { BsEyeFill } from 'react-icons/bs'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts, addToCart as addProductToCart } from '../redux/productSlice'
+import { api } from '../services/api'
 
 export default function AllProduct() {
-    const [product, SetProduct] = useState()
+    const dispatch = useDispatch()
+    const { items: product, status, error } = useSelector((state) => state.products)
+    const cartItems = useSelector((state) => state.products.cart)
     const navigation = useNavigate()
-    const API_URL = process.env.REACT_APP_API_URL;
-    useEffect(() => {
-        fetch(`${API_URL}products`).then((res) => res.json()).then((data) => SetProduct(data))
-    }, [])
-
     
-    const AddToCart = async (v) => {
-        const userId = localStorage.getItem('userId');
-      
-        if (!userId) {
-          toast.error('Please login first to add items to cart');
-          navigation('/login');
-          return;
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts())
         }
-      
-        try {
-          // Step 1: Fetch user's cart to check if the product already exists
-          const response = await fetch(`${API_URL}cart?userId=${userId}`);
-          const cartItems = await response.json();
-      
-          // Step 2: Check if the product is already in the cart
-          const productExists = cartItems.some(item => item.productId === v.id);
-      
-          if (productExists) {
-            toast.error('This product is already in your cart');
-            return;
-          }
-      
-          // Step 3: If not in cart, add the product
-          const cartItem = {
-            productId: v.id,
-            userId: userId,
-            price: v.price,
-            quantity: 1,
-            name: v.name,
-            size: v.size,
-            color: v.color,
-            image: v.image,
-          };
-      
-          const addResponse = await fetch(`${API_URL}cart`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cartItem),
-          });
-      
-          if (addResponse.ok) {
-            toast.success('Product added to cart successfully!');
-            // Add a small delay before navigation
-            setTimeout(() => {
-              navigation('/cart');
-            }, 1500); // 1.5 seconds delay
-          } else {
-            toast.error('Failed to add product to cart. Please try again.');
-          }
-        } catch (error) {
-          console.error('Error adding to cart:', error);
-          toast.error('Something went wrong. Please try again.');
-        }
-      };
+    }, [status, dispatch])
 
+    const AddToCart = async (productToAdd) => {
+        const userId = localStorage.getItem('userId')
+
+        if (!userId) {
+            toast.error('Please login first to add items to cart')
+            navigation('/login')
+            return
+        }
+
+        const productExistsInCart = cartItems.some(item => item.id === productToAdd.id)
+
+        if (productExistsInCart) {
+            toast.error('This product is already in your cart')
+            return
+        }
+
+        try {
+            dispatch(addProductToCart(productToAdd))
+
+            const cartItemForApi = {
+                productId: productToAdd.id,
+                userId: userId,
+                price: productToAdd.price,
+                quantity: 1,
+                name: productToAdd.name,
+                size: productToAdd.size,
+                color: productToAdd.color,
+                image: productToAdd.image,
+            }
+
+            const addResponse = await api.addToCart(cartItemForApi)
+
+            if (addResponse) {
+                toast.success('Product added to cart successfully!')
+                setTimeout(() => {
+                    navigation('/cart')
+                }, 1500)
+            } else {
+                toast.error('Failed to add product to cart. Please try again.')
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error)
+            toast.error('Something went wrong. Please try again.')
+        }
+    }
+
+    if (status === 'loading') {
+        return <div>Loading products...</div>
+    }
+
+    if (status === 'failed') {
+        return <div>Error: {error}</div>
+    }
 
     return (
         <div className='py-4' >
@@ -77,7 +81,7 @@ export default function AllProduct() {
             <div className='container rounded-5 px-4 py-4' style={{ background: 'linear-gradient(145deg,rgb(230, 235, 237),rgb(246, 247, 248))' }}>
                 <div className='row g-4'>
                     {
-                        product && product.map((v) => (
+                        Array.isArray(product) && product.map((v) => (
                             <div key={v.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div className="card h-100 shadow-lg border-0 rounded-3" style={{
                                     background: 'linear-gradient(145deg,rgb(230, 235, 237),rgb(246, 247, 248))'

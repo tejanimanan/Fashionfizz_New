@@ -3,29 +3,33 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart as addProductToCart } from './redux/productSlice';
+import { api } from './services/api';
+
 export default function MenProduct() {
-    const [product, setProduct] = useState([]);
+    const dispatch = useDispatch();
+    const { items: allProducts, status, error } = useSelector((state) => state.products);
+    const cartItems = useSelector((state) => state.products.cart);
     const [fdata, setFdata] = useState([]);
     const navigation = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL;
-    useEffect(() => {
-        // Fetch products data
-        
-        fetch(`${API_URL}products`)
-            .then((res) => res.json())
-            .then((data) => {
-                setProduct(data);
-                // Filter products that belong to 'Women' category after fetching
-                const filtered = data.filter((product) =>
-                    product.category.toLowerCase().startsWith("men")
-                );
-                console.log(filtered)
-                setFdata(filtered);
-            })
-            .catch((error) => console.error("Error fetching products:", error));
-    }, []); // Empty dependency array ensures this runs only once when component mounts
 
-     const AddToCart = async (v) => {
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts());
+        }
+    }, [status, dispatch]);
+
+    useEffect(() => {
+        if (allProducts.length > 0) {
+            const filtered = allProducts.filter((product) =>
+                product.category && product.category.toLowerCase().startsWith("men")
+            );
+            setFdata(filtered);
+        }
+    }, [allProducts]);
+
+     const AddToCart = async (productToAdd) => {
             const userId = localStorage.getItem('userId');
     
             if (!userId) {
@@ -33,44 +37,35 @@ export default function MenProduct() {
                 navigation('/login');
                 return;
             }
+
+            const productExistsInCart = cartItems.some(item => item.id === productToAdd.id);
+    
+            if (productExistsInCart) {
+                toast.error('This product is already in your cart');
+                return;
+            }
     
             try {
-                // Step 1: Fetch user's cart to check if the product already exists
-                const response = await fetch(`${API_URL}cart?userId=${userId}`);
-                const cartItems = await response.json();
-    
-                // Step 2: Check if the product is already in the cart
-                const productExists = cartItems.some(item => item.productId === v.id);
-    
-                if (productExists) {
-                    toast.error('This product is already in your cart');
-                    return;
-                }
-    
-                // Step 3: If not in cart, add the product
-                const cartItem = {
-                    productId: v.id,
+                dispatch(addProductToCart(productToAdd));
+
+                const cartItemForApi = {
+                    productId: productToAdd.id,
                     userId: userId,
-                    price: v.price,
+                    price: productToAdd.price,
                     quantity: 1,
-                    name: v.name,
-                    size: v.size,
-                    color: v.color,
-                    image: v.image,
+                    name: productToAdd.name,
+                    size: productToAdd.size,
+                    color: productToAdd.color,
+                    image: productToAdd.image,
                 };
     
-                const addResponse = await fetch(`${API_URL}cart`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(cartItem),
-                });
+                const addResponse = await api.addToCart(cartItemForApi);
     
-                if (addResponse.ok) {
+                if (addResponse) {
                     toast.success('Product added to cart successfully!');
-                    // Add a small delay before navigation
                     setTimeout(() => {
                         navigation('/cart');
-                    }, 1500); // 1.5 seconds delay
+                    }, 1500);
                 } else {
                     toast.error('Failed to add product to cart. Please try again.');
                 }
@@ -79,6 +74,15 @@ export default function MenProduct() {
                 toast.error('Something went wrong. Please try again.');
             }
         };
+    
+    if (status === 'loading') {
+        return <div>Loading men's products...</div>;
+    }
+
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className='container rounded-5 p-4' style={{ background: 'linear-gradient(145deg,rgb(230, 235, 237),rgb(246, 247, 248))' }}>
             <ToastContainer/>

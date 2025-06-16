@@ -9,11 +9,7 @@ export default function NavBar() {
 
   const userId = localStorage.getItem('userId');
 
-  const handleLogout = () => {
-    localStorage.removeItem('userId');
-    alert("Logout successfully");
-    navigate('/login');
-  };
+  
 
   const toggleMenu = () => {
     if (menuRef.current) {
