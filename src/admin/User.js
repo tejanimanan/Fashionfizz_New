@@ -9,40 +9,39 @@ export default function Users() {
   ];
 
   return (
-    <div className="d-flex">
-      
-      <div className="container-fluid" >
-        <div className="mt-4">
-          <h2>All Users</h2>
-          <div className="table-responsive bg-white p-4 mt-4 rounded shadow-sm">
-            <table className="table table-bordered table-hover align-middle">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col">User ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Role</th>
+    <div className="user-bg py-4">
+      <div className="container-fluid">
+        <div className="mt-2 mb-4">
+          <h2 className="user-title">All Users</h2>
+        </div>
+        <div className="table-responsive bg-white p-4 rounded shadow-sm user-table">
+          <table className="table table-bordered table-hover align-middle">
+            <thead className="table-light">
+              <tr>
+                <th scope="col">User ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td><span className="badge bg-secondary">{user.id}</span></td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td><span className="badge bg-success">{user.role}</span></td>
                 </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                  </tr>
-                ))}
-                {users.length === 0 && (
-                  <tr>
-                    <td colSpan="4" className="text-center text-muted">
-                      No users found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              ))}
+              {users.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="text-center text-muted">
+                    No users found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

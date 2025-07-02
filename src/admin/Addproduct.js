@@ -11,19 +11,19 @@ const AddProduct = () => {
   const toggleForm = () => setShowForm(!showForm);
 
   return (
-    <div className="">
+    <div className="add-product-bg py-4">
       {/* <Sidebar /> */}
-      <div className="container" >
-        <div className="d-flex justify-content-between align-items-center mt-4">
-          <h2>Add Product</h2>
-          <button className="btn btn-success" onClick={toggleForm}>
+      <div className="container">
+        <div className="d-flex justify-content-between align-items-center mt-2 mb-4">
+          <h2 className="add-product-title">Add Product</h2>
+          <button className={`btn ${showForm ? 'btn-danger' : 'btn-success'} add-product-btn`} onClick={toggleForm}>
             {showForm ? 'Close Form' : 'Add New Product'}
           </button>
         </div>
 
         {showForm && (
-          <form className="mt-4 border rounded p-4 bg-light">
-            <div className="row">
+          <form className="mt-4 border rounded p-4 bg-white shadow-sm add-product-form">
+            <div className="row g-3">
               <div className="mb-3 col-md-4">
                 <label className="form-label">Category</label>
                 <select className="form-select">
@@ -45,16 +45,16 @@ const AddProduct = () => {
                 <input type="text" className="form-control" />
               </div>
               <div className="col-12">
-                <button className="btn btn-primary">Save Product</button>
+                <button className="btn btn-primary add-product-save-btn">Save Product</button>
               </div>
             </div>
           </form>
         )}
 
         <div className="mt-5">
-          <h4>Product List</h4>
+          <h4 className="product-list-title">Product List</h4>
           <div className="table-responsive">
-            <table className="table table-bordered mt-3">
+            <table className="table table-bordered mt-3 add-product-table">
               <thead className="table-light">
                 <tr>
                   <th>ID</th>
@@ -72,12 +72,12 @@ const AddProduct = () => {
                   </tr>
                 ) : (
                   products.map((product) => (
-                    <tr key={product.id}>
-                      <td>{product.id}</td>
-                      <td><img src={product.image} alt={product.name} width="60" /></td>
+                    <tr key={product.id} className="align-middle">
+                      <td><span className="badge bg-secondary">{product.id}</span></td>
+                      <td><img src={product.image} alt={product.name} width="60" className="rounded shadow-sm" /></td>
                       <td>{product.name}</td>
-                      <td>{product.category}</td>
-                      <td>₹{product.price}</td>
+                      <td><span className={`badge ${product.category === 'Men' ? 'bg-primary' : product.category === 'Women' ? 'bg-pink' : 'bg-info'} text-white`}>{product.category}</span></td>
+                      <td className="fw-bold text-success">₹{product.price}</td>
                       <td>
                         <button className="btn btn-sm btn-warning me-2">Edit</button>
                         <button className="btn btn-sm btn-danger">Delete</button>

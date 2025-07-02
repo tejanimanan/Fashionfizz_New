@@ -1,4 +1,3 @@
-
 .App {
   text-align: center;
   /* background: url('https://img.freepik.com/free-photo/paper-bags-different-colors-blue-background-top-view_169016-43755.jpg?ga=GA1.1.1711038253.1738155328&semt=ais_hybrid');
@@ -267,4 +266,171 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* --- Admin Panel Custom Styles --- */
+
+.admin-sidebar {
+  background: linear-gradient(135deg, rgb(76, 161, 175), rgb(196, 113, 237), rgb(255, 175, 123));
+  box-shadow: 2px 0 12px rgba(76, 161, 175, 0.1);
+  color: #fff;
+  min-height: 100vh;
+  z-index: 1000;
+}
+.sidebar-title {
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.sidebar-link {
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  transition: background 0.2s, color 0.2s;
+  padding: 10px 16px;
+}
+.sidebar-link.active, .sidebar-link:hover {
+  background: rgb(255, 175, 123, 0.8);
+  color: #222 !important;
+}
+.sidebar-icon {
+  font-size: 1.2rem;
+  color: #fff;
+  transition: color 0.2s;
+}
+.sidebar-link.active .sidebar-icon, .sidebar-link:hover .sidebar-icon {
+  color: rgb(196, 113, 237);
+}
+.sidebar-toggle {
+  background: rgba(237, 10, 10, 0.2) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+@media (max-width: 991px) {
+  .admin-sidebar {
+    position: static !important;
+    width: 100% !important;
+    min-height: auto;
+    flex-direction: row;
+    height: auto;
+  }
+}
+
+.admin-main-bg {
+  background: linear-gradient(120deg, #f8fafc 60%, #e0c3fc 100%);
+  min-height: 100vh;
+}
+.admin-content {
+  padding: 32px 16px 16px 16px;
+}
+
+/* Dashboard Cards */
+.dashboard-title {
+  color: rgb(76, 161, 175);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.dashboard-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(76, 161, 175, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.dashboard-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(196, 113, 237, 0.15);
+}
+.dashboard-men {
+  background: linear-gradient(135deg, rgb(76, 161, 175), rgb(113, 201, 206));
+}
+.dashboard-women {
+  background: linear-gradient(135deg, rgb(255, 175, 123), rgb(255, 107, 107));
+}
+.dashboard-accessories {
+  background: linear-gradient(135deg, rgb(196, 113, 237), rgb(255, 175, 123));
+}
+
+/* Add Product Page */
+.add-product-bg {
+  background: linear-gradient(120deg, #f8fafc 60%, #e0c3fc 100%);
+  min-height: 100vh;
+}
+.add-product-title {
+  color: rgb(196, 113, 237);
+  font-weight: bold;
+}
+.add-product-btn {
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(196, 113, 237, 0.08);
+}
+.add-product-form {
+  border: 2px solid rgb(196, 113, 237, 0.15);
+  border-radius: 16px;
+}
+.add-product-save-btn {
+  background: linear-gradient(90deg, rgb(76, 161, 175), rgb(196, 113, 237));
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+}
+.add-product-save-btn:hover {
+  background: linear-gradient(90deg, rgb(255, 175, 123), rgb(196, 113, 237));
+}
+.add-product-table th {
+  background: rgb(196, 113, 237, 0.15);
+  color: #333;
+}
+.add-product-table td {
+  background: #fff;
+}
+.bg-pink {
+  background: rgb(255, 107, 107) !important;
+}
+.product-list-title {
+  color: rgb(76, 161, 175);
+  font-weight: 600;
+}
+
+/* User Table */
+.user-bg {
+  background: linear-gradient(120deg, #f8fafc 60%, #e0c3fc 100%);
+  min-height: 100vh;
+}
+.user-title {
+  color: rgb(76, 161, 175);
+  font-weight: bold;
+}
+.user-table th {
+  background: rgb(76, 161, 175, 0.15);
+  color: #333;
+}
+.user-table td {
+  background: #fff;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 991px) {
+  .admin-content {
+    margin-left: 0 !important;
+    padding: 16px 4px;
+  }
+  .admin-sidebar {
+    width: 100% !important;
+    min-height: auto;
+    flex-direction: row;
+    height: auto;
+    position: static !important;
+  }
+}
+@media (max-width: 767px) {
+  .dashboard-title, .add-product-title, .user-title {
+    font-size: 1.2rem;
+  }
+  .dashboard-card {
+    font-size: 0.95rem;
+  }
 }
