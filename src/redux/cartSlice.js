@@ -54,15 +54,7 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
-    // Direct reducers for optimistic UI updates or simple state changes
-    // For adding to cart, we will reuse the action from productSlice for consistency, 
-    // but the cartSlice will manage its own `items` state.
-    // A potential flow: When product is added via productSlice, it also dispatches an action here.
-    // For now, let's assume `addProductToCart` is the primary entry point for adding.
-    // So, we don't need an `addToCart` reducer here if it's handled by productSlice. 
-    // If productSlice's addToCart only handles product list, and this slice handles actual cart items,
-    // then we might need to adjust.
-    // Let's keep cart specific logic here.
+   
     addToCartLocal: (state, action) => {
       const existingItem = state.items.find(item => item.productId === action.payload.productId);
       if (existingItem) {

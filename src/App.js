@@ -5,6 +5,11 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ProfilePage from './Component/ProfilePage';
+import AdminDashboard from './admin/AdminDashboard';
+import AddProduct from './admin/Addproduct';
+import Orders from './admin/Order';
+import Users from './admin/User';
+import AdminMain from './admin/AdminMain';
 
 // Lazy-loaded components
 const About = lazy(() => import('./Component/About'));
@@ -72,12 +77,20 @@ const AppWithRouter = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Home />} />
 
+            {/* admin side */}
+            <Route path='/admin' element={<AdminMain />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path='addproduct' element={<AddProduct />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="users" element={<Users />} />
+            </Route>
+            {/* admin side */}
+
             <Route path='/shop' element={<Shop />}>
               <Route index element={<AllProduct />} />
               <Route path='women' element={<WomenProduct />} />
               <Route path='men' element={<MenProduct />} />
               <Route path='Accessories' element={<BagProduct />} />
-              
             </Route>
 
             <Route path='/about' element={<About />} />

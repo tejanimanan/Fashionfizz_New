@@ -3,12 +3,12 @@ const API_BASE_URL = process.env.REACT_APP_API_URL;
 export const api = {
   // Products
   getProducts: async () => {
-    const response = await fetch(`${API_BASE_URL}products`);
+    const response = await fetch(`http://localhost:5000/api/product/`);
     return response.json();
   },
 
   getProductById: async (id) => {
-    const response = await fetch(`${API_BASE_URL}products/${id}`);
+    const response = await fetch(`http://localhost:5000/api/product/${id}`);
     return response.json();
   },
 
