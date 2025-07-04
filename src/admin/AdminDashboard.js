@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { FaMale, FaFemale, FaGem } from 'react-icons/fa';
+import { FaMale, FaFemale, FaGem, FaClipboardList, FaUsers } from 'react-icons/fa';
 
 export default function AdminDashboard() {
   return (
@@ -31,6 +31,24 @@ export default function AdminDashboard() {
               <FaGem size={36} className="mb-2" />
               <h5 className="card-title">Accessories</h5>
               <p className="card-text">Products: 80</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card dashboard-card dashboard-men text-white text-center h-100">
+            <div className="card-body">
+              <FaUsers size={36} className="mb-2" />
+              <h5 className="card-title">user</h5>
+              <p className="card-text"> 120</p>
+            </div>
+          </div>
+        </div>
+         <div className="col-md-4">
+          <div className="card dashboard-card dashboard-men text-white text-center h-100">
+            <div className="card-body">
+              <FaClipboardList size={36} className="mb-2" />
+              <h5 className="card-title">Orders</h5>
+              <p className="card-text"> 99</p>
             </div>
           </div>
         </div>

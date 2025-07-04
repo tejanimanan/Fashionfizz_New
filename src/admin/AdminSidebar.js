@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaTachometerAlt, FaBoxOpen, FaClipboardList, FaUsers, FaKey } from 'react-icons/fa';
+import { FaTachometerAlt, FaBoxOpen, FaClipboardList, FaUsers, FaKey, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -26,11 +26,11 @@ const Sidebar = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         {!isCollapsed && <h4 className="sidebar-title m-0">Admin Panel</h4>}
         <button
-          className="btn btn-sm btn-outline-light sidebar-toggle"
+          className="btn btn-sm btn-outline-light sidebar-toggle pb-2"
           onClick={() => setIsCollapsed(!isCollapsed)}
           aria-label="Toggle sidebar"
         >
-          <span className="navbar-toggler-icon"></span>
+          {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
         </button>
       </div>
       <ul className="nav nav-pills flex-column mb-auto">

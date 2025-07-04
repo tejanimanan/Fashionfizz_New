@@ -11,7 +11,7 @@ export default function SingleProduct() {
   useEffect(() => {
     console.log(id);
     const API_URL = process.env.REACT_APP_API_URL;
-    fetch(`${API_URL}products/` + id)
+    fetch(`http://localhost:5000/api/product/` + id)
       .then((res) => res.json())
       .then((data) => SetProduct(data));
   }, []);
@@ -108,7 +108,7 @@ export default function SingleProduct() {
         {product && (
           <div className='row mt-5 shadow p-2 mb-5 rounded-5 bg-light'>
             <div className='col-lg-6'>
-              <img src={product.image} className='w-75 rounded-5' alt='no image'></img>
+              <img  src={`http://localhost:5000${product.image}`} className='w-75 rounded-5' alt='no image'></img>
             </div>
             <div className='col-lg-6 col-md-6 pb-3 text-start mt-5'>
               <h2 className=""> {product.name} </h2>
