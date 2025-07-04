@@ -59,15 +59,52 @@ export default function AddProductForm({ onClose }) {
               <h5 className="modal-title">Add Product</h5>
               <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
+
             <div className="modal-body">
-              <input name="name" onChange={handleChange} className="form-control mb-2" placeholder="Name" />
-              <input name="category" onChange={handleChange} className="form-control mb-2" placeholder="Category" />
-              <input name="price" type="number" onChange={handleChange} className="form-control mb-2" placeholder="Price" />
-              <input name="size" onChange={handleChange} className="form-control mb-2" placeholder="Size (comma separated)" />
-              <input name="color" onChange={handleChange} className="form-control mb-2" placeholder="Color (comma separated)" />
-              <input name="image" type="file" accept="image/*" onChange={handleImageChange} className="form-control mb-2" />
-              <textarea name="description" onChange={handleChange} className="form-control mb-2" placeholder="Description" />
+              <div className="row text-start">
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="name" className="form-label">Product Name</label>
+                  <input name="name" id="name" onChange={handleChange} className="form-control" placeholder="Name" />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="category" className="form-label">Category</label>
+                  <select name="category" id="category" onChange={handleChange} className="form-select">
+                    <option value="">Select Category</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Kids">Kids</option>
+                  </select>
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="price" className="form-label">Price</label>
+                  <input name="price" id="price" type="number" onChange={handleChange} className="form-control" placeholder="Price" />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="size" className="form-label">Size</label>
+                  <input name="size" id="size" onChange={handleChange} className="form-control" placeholder="Size (comma separated)" />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="color" className="form-label">Color</label>
+                  <input name="color" id="color" onChange={handleChange} className="form-control" placeholder="Color (comma separated)" />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="image" className="form-label">Product Image</label>
+                  <input name="image" id="image" type="file" accept="image/*" onChange={handleImageChange} className="form-control" />
+                </div>
+
+                <div className="mb-3 col-12">
+                  <label htmlFor="description" className="form-label">Description</label>
+                  <textarea name="description" id="description" onChange={handleChange} className="form-control" placeholder="Description" rows="3" />
+                </div>
+              </div>
             </div>
+
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
               <button type="submit" className="btn btn-primary">Add Product</button>
@@ -76,5 +113,6 @@ export default function AddProductForm({ onClose }) {
         </div>
       </div>
     </div>
+
   );
 }

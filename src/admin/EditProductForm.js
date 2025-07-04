@@ -65,26 +65,114 @@ export default function EditProductForm({ product, onClose }) {
               <h5 className="modal-title">Edit Product</h5>
               <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
+
             <div className="modal-body">
-              <input name="name" value={formData.name} onChange={handleChange} className="form-control mb-2" placeholder="Name" />
-              <input name="category" value={formData.category} onChange={handleChange} className="form-control mb-2" placeholder="Category" />
-              <input name="price" type="number" value={formData.price} onChange={handleChange} className="form-control mb-2" placeholder="Price" />
-              <input name="size" value={formData.size.join(',')} onChange={handleChange} className="form-control mb-2" placeholder="Size (comma separated)" />
-              <input name="color" value={formData.color.join(',')} onChange={handleChange} className="form-control mb-2" placeholder="Color (comma separated)" />
-              
-              {/* File input for new image */}
-              <input name="image" type="file" accept="image/*" onChange={handleImageChange} className="form-control mb-2" />
-
-              {/* Show current image */}
-              {formData.image && (
-                <div className="mb-2">
-                  <small>Current Image:</small><br />
-                  <img src={`http://localhost:5000${formData.image}`} alt="current" height="80" />
+              <div className="row text-start">
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="name" className="form-label">Product Name</label>
+                  <input
+                    name="name"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Name"
+                  />
                 </div>
-              )}
 
-              <textarea name="description" value={formData.description} onChange={handleChange} className="form-control mb-2" placeholder="Description" />
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="category" className="form-label">Category</label>
+                  <select
+                    name="category"
+                    id="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="form-select"
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Kids">Kids</option>
+                  </select>
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="price" className="form-label">Price</label>
+                  <input
+                    name="price"
+                    id="price"
+                    type="number"
+                    value={formData.price}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Price"
+                  />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="size" className="form-label">Size</label>
+                  <input
+                    name="size"
+                    id="size"
+                    value={formData.size.join(',')}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Size (comma separated)"
+                  />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="color" className="form-label">Color</label>
+                  <input
+                    name="color"
+                    id="color"
+                    value={formData.color.join(',')}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Color (comma separated)"
+                  />
+                </div>
+
+                <div className="mb-3 col-md-6">
+                  <label htmlFor="image" className="form-label">Upload New Image</label>
+                  <input
+                    name="image"
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="form-control"
+                  />
+                </div>
+
+                {formData.image && (
+                  <div className="mb-3 col-12">
+                    <label className="form-label">Current Image</label><br />
+                    <img
+                      src={`http://localhost:5000${formData.image}`}
+                      alt="Current"
+                      height="80"
+                      className="rounded border"
+                    />
+                  </div>
+                )}
+
+                <div className="mb-3 col-12">
+                  <label htmlFor="description" className="form-label">Description</label>
+                  <textarea
+                    name="description"
+                    id="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="form-control"
+                    rows="3"
+                    placeholder="Description"
+                  />
+                </div>
+              </div>
             </div>
+
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
               <button type="submit" className="btn btn-success">Update</button>
@@ -93,5 +181,6 @@ export default function EditProductForm({ product, onClose }) {
         </div>
       </div>
     </div>
+
   );
 }
