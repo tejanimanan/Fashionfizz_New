@@ -7,11 +7,11 @@ export default function SingleProduct() {
   const [product, SetProduct] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate()
-  const API_URL = process.env.REACT_APP_API_URL;
+  // const API_URL = process.env.REACT_APP_API_URL;
   useEffect(() => {
     console.log(id);
-    const API_URL = process.env.REACT_APP_API_URL;
-    fetch(`http://localhost:5000/api/product/` + id)
+    // const API_URL = process.env.REACT_APP_API_URL;
+    fetch(`https://fashionfizzbackend.onrender.com/api/product/` + id)
       .then((res) => res.json())
       .then((data) => SetProduct(data));
   }, []);
@@ -20,34 +20,6 @@ export default function SingleProduct() {
       SetItem(item - 1)
     }
   }
-  // const AddCart = () => {
-  //   const userId = localStorage.getItem('userId');
-
-  //   if (userId) { 
-  //     const cartItem = {
-  //       productId: product.id,  
-  //       userId: userId,         
-  //       price: product.price,   
-  //       quantity: item,         
-  //       name: product.name,     
-  //       size: product.size,     
-  //       color: product.color,   
-  //       image: product.image    
-  //     };
-
-  //     // Sending cart item to backend
-  //     fetch('http://localhost:5001/cart', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(cartItem),
-  //     })
-  //     alert("Product is added to cart")
-  //     navigate('/cart')
-  //   } else {
-  //       alert('User is not logged in. UserId not found in localStorage.');
-  //       navigate('/login')
-  //   }
-  // };
 
   const AddCart = async () => {
     const userId = localStorage.getItem('userId');
@@ -60,7 +32,7 @@ export default function SingleProduct() {
 
     try {
       // Step 1: Fetch user's cart to check if the product already exists
-      const response = await fetch(`${API_URL}cart?userId=${userId}`);
+      const response = await fetch(`https://fashionfizzbackend.onrender.com/api/cart/${userId}`);
       const cartItems = await response.json();
 
       // Step 2: Check if the product is already in the cart
@@ -83,7 +55,7 @@ export default function SingleProduct() {
         image: product.image,
       };
 
-      const addResponse = await fetch(`${API_URL}cart`, {
+      const addResponse = await fetch(`https://fashionfizzbackend.onrender.com/api/cart`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cartItem),
@@ -108,7 +80,7 @@ export default function SingleProduct() {
         {product && (
           <div className='row mt-5 shadow p-2 mb-5 rounded-5 bg-light'>
             <div className='col-lg-6'>
-              <img  src={`http://localhost:5000${product.image}`} className='w-75 rounded-5' alt='no image'></img>
+              <img  src={`https://fashionfizzbackend.onrender.com${product.image}`} className='w-75 rounded-5' alt='no image'></img>
             </div>
             <div className='col-lg-6 col-md-6 pb-3 text-start mt-5'>
               <h2 className=""> {product.name} </h2>

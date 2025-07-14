@@ -8,7 +8,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   const navItems = [
-    { to: '/admin', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    { to: '/admin/dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { to: '/admin/addproduct', label: 'All Product', icon: <FaBoxOpen /> },
     { to: '/admin/orders', label: 'View Orders', icon: <FaClipboardList /> },
     { to: '/admin/users', label: 'All Users', icon: <FaUsers /> },

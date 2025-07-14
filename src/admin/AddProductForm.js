@@ -41,7 +41,7 @@ export default function AddProductForm({ onClose }) {
     data.append('color', JSON.stringify(formData.color));
     data.append('image', imageFile);
 
-    const response = await axios.post('http://localhost:5000/api/product/', data, {
+    const response = await axios.post('https://fashionfizzbackend.onrender.com/api/product/', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

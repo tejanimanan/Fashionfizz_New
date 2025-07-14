@@ -70,7 +70,7 @@ export default function Orders() {
                         {order.items.map((item, idx) => (
                           <div key={idx}>
                             <div>{item.name} ₹{item.price} × {item.quantity}</div>
-                            <img src={`http://localhost:5000${item.image}`} alt="Product" width="60" height="60" />
+                            <img src={`https://fashionfizzbackend.onrender.com/${item.image}`} alt="Product" width="60" height="60" />
                           </div>
                         ))}
                       </td>

@@ -23,10 +23,11 @@ export default function NavBar() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg" style={{ background: "linear-gradient(to right, #4b6cb7, #182848)" }}>
+      <nav className="navbar navbar-expand-lg" style={{ background: "linear-gradient(to right, #8E2DE2, #4A00E0)" }}>
+
         <div className="container-fluid shadow p-2 sticky-top">
           <Link to="/" className="text-dark text-decoration-none fw-bold">
-            <img src="images/Fashionfizz_logo.png" alt="IMG-LOGO" width="100px" height="70px" />
+            <img src="/Fashionfizz_logo.png" alt="IMG-LOGO" width="100px" height="70px" />
           </Link>
 
           {/* Custom Toggle Button */}

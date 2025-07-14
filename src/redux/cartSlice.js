@@ -13,15 +13,16 @@ export const fetchCart = createAsyncThunk(
 export const updateCartItemQuantity = createAsyncThunk(
   'cart/updateCartItemQuantity',
   async ({ itemId, quantity, currentItem }) => {
-    // The API might need the full item object or just ID and quantity
     const updatedItem = { ...currentItem, quantity };
-    const response = await fetch(`http://localhost:5000/api/cart/${itemId}`, {
+    const response = await fetch(`https://fashionfizzbackend.onrender.com/api/cart/${itemId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedItem),
     });
     const data = await response.json();
-    return data;
+
+    // ✅ Return only the actual updated item
+    return data.cartItem;
   }
 );
 

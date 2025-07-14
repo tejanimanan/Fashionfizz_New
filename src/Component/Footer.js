@@ -10,9 +10,9 @@ export default function Footer() {
                         <h4 className='fw-bold pb-3 mt-3 pt-4'>Categories</h4>
                         <Link to={'/shop/women'} className='d-block text-decoration-none mb-2 text-white-50'>Women</Link>
                         <Link to={'/shop/men'} className='d-block text-decoration-none mb-2 text-white-50'>Men</Link>
-                        <Link to={'/shop/bag'} className='d-block text-decoration-none mb-2 text-white-50'>Bag</Link>
+                        <Link to={'/shop/Accessories'} className='d-block text-decoration-none mb-2 text-white-50'>Bag</Link>
                         <Link to={'/shop'} className='d-block text-decoration-none mb-2 text-white-50'>Shose</Link>
-                        <Link to={'/shop'} className='d-block text-decoration-none mb-2 text-white-50'>Watch</Link>
+                        <Link to={'/shop/Accessories'} className='d-block text-decoration-none mb-2 text-white-50'>Watch</Link>
                     </div>
                     <div className='col-lg-2 text-start'>
                         <h4 className='fw-bold pb-3 mt-3 pt-4'>Help</h4>

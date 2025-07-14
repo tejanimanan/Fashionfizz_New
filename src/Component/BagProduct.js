@@ -94,7 +94,7 @@ export default function BagProduct() {
                                 }}>
                                     <div className="position-relative overflow-hidden rounded-3" style={{ height: '270px', background: 'linear-gradient(145deg,rgb(230, 235, 237),rgb(246, 247, 248))' }}>
                                         <img 
-                                             src={`http://localhost:5000${v.image}`}
+                                             src={`https://fashionfizzbackend.onrender.com${v.image}`}
                                             className="card-img-top p-3 product-img h-100 w-100" 
                                             style={{ objectFit: 'contain' }}
                                             alt={v.name} 

@@ -80,7 +80,7 @@ const AppWithRouter = () => {
             {/* admin side */}
               <Route path='/admin' element={<Login />} />
             <Route path='/admin' element={<AdminMain />}>
-              <Route path='adddashboard' element={<AdminDashboard />} />
+              <Route path='dashboard' element={<AdminDashboard />} />
               <Route path='addproduct' element={<AddProduct />} />
               <Route path="orders" element={<Orders />} />
               <Route path="users" element={<Users />} />

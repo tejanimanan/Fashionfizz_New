@@ -1,16 +1,16 @@
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://fashionfizzbackend.onrender.com/api';
 export const api = {
   // Products
   getProducts: async () => {
-    const response = await fetch(`http://localhost:5000/api/product/`);
+    const response = await fetch(`${API_BASE}/product/`);
     return response.json();
   },
 
   getProductById: async (id) => {
-    const response = await fetch(`http://localhost:5000/api/product/${id}`);
+    const response = await fetch(`${API_BASE}/product/${id}`);
     return response.json();
   },
 
@@ -22,14 +22,14 @@ export const api = {
 
   // Cart
   getCart: async (id) => {
-    const response = await fetch(`http://localhost:5000/api/cart/${id}`, {
+    const response = await fetch(`${API_BASE}/cart/${id}`, {
       method: "GET"
     });
     return response.json();
   },
 
   addToCart: async (product) => {
-    const response = await fetch(`http://localhost:5000/api/cart`, {
+    const response = await fetch(`${API_BASE}/cart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const api = {
   },
 
   removeFromCart: async (productId) => {
-    const response = await fetch(`http://localhost:5000/api/cart/${productId}`, {
+    const response = await fetch(`${API_BASE}/cart/${productId}`, {
       method: 'DELETE',
     });
     return response.json();
@@ -48,17 +48,17 @@ export const api = {
 
   // Users
   getUserById: async (userId) => {
-    const res = await fetch(`http://localhost:5000/api/user/${userId}`);
+    const res = await fetch(`${API_BASE}/user/${userId}`);
     const user = await res.json();
     return user;
   },
-  getAllUser:async()=>{
-      const res = await fetch('http://localhost:5000/api/user/',{method:'GET'});
-      return res.json();
+  getAllUser: async () => {
+    const res = await fetch(`${API_BASE}/user/`, { method: 'GET' });
+    return res.json();
   },
 
   updateUser: async (userId, userData) => {
-    const response = await fetch(`${API_BASE_URL}user/${userId}`, {
+    const response = await fetch(`${API_BASE}/user/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -69,27 +69,24 @@ export const api = {
   },
 
   // Orders
-  addOrder : async (order) => {
-    const response = await fetch('http://localhost:5000/api/order', {
+  addOrder: async (order) => {
+    const res = await fetch(`${API_BASE}/order`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(order)
     });
 
-    const result = await response.json();
-    if (response.ok) {
-      alert("Order placed successfully!");
-      // return response.json()
-    } else {
-      alert(result.message || "Failed to place order.");
-    }
+    const data = await res.json(); // ✅ Parse the JSON
+    return data;
   },
   getOrders: async (userId) => {
-    const response = await fetch(`http://localhost:5000/api/order/user/${userId}`);
+    const response = await fetch(`${API_BASE}/order/user/${userId}`);
     return response.json();
   },
-  getAllorder:async()=>{
-    const response =  await fetch('http://localhost:5000/api/order');
+  getAllorder: async () => {
+    const response = await fetch(`${API_BASE}/order`);
     return response.json();
   },
   deleteOrder: async (id) => {
@@ -100,8 +97,8 @@ export const api = {
     const res = await axios.put(`${API_BASE}/order/${id}/status`, { status });
     return res.data;
   },
-  getDashboardCounts:async ()=>{
-    const res = await axios.get('http://localhost:5000/api/product/dashboard-counts');
+  getDashboardCounts: async () => {
+    const res = await axios.get(`${API_BASE}/product/dashboard-counts`);
     return res.data;
   }
 }; 

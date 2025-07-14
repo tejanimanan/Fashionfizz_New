@@ -47,7 +47,7 @@ export default function EditProductForm({ product, onClose }) {
       data.append('image', formData.image); // Keep existing image path
     }
 
-    await axios.put(`http://localhost:5000/api/product/${formData.id}`, data, {
+    await axios.put(`https://fashionfizzbackend.onrender.com/api/product/${formData.id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -150,7 +150,7 @@ export default function EditProductForm({ product, onClose }) {
                   <div className="mb-3 col-12">
                     <label className="form-label">Current Image</label><br />
                     <img
-                      src={`http://localhost:5000${formData.image}`}
+                      src={`https://fashionfizzbackend.onrender.com${formData.image}`}
                       alt="Current"
                       height="80"
                       className="rounded border"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import AddressAutocomplete from './AddressAutocomplete'
 export default function Register() {
     const navigate = useNavigate()
     const [name, SetName] = useState()
@@ -19,44 +20,44 @@ export default function Register() {
     const HandleSubmit = (e) => {
         e.preventDefault()
 
-            // Validations
-            if (!name.trim()) {
-                alert("Enter First Name");
-                return;
-            }
-            if (!email.trim()) {
-                alert("Enter Email");
-                return;
-            }
-            if (!emailRegex.test(email)) {
-                alert("Enter a valid Email");
-                return;
-            }
-            if (!password.trim()) {
-                alert("Enter Password");
-                return;
-            }
-            // if (!passwordRegex.test(password)) {
-            //     console.log(password)
-            //     alert("Password must be at least 6 characters, contain 1 special character & 1 number");
-            //     return;
-            // }
+        // Validations
+        if (!name.trim()) {
+            alert("Enter First Name");
+            return;
+        }
+        if (!email.trim()) {
+            alert("Enter Email");
+            return;
+        }
+        if (!emailRegex.test(email)) {
+            alert("Enter a valid Email");
+            return;
+        }
+        if (!password.trim()) {
+            alert("Enter Password");
+            return;
+        }
+        // if (!passwordRegex.test(password)) {
+        //     console.log(password)
+        //     alert("Password must be at least 6 characters, contain 1 special character & 1 number");
+        //     return;
+        // }
 
-            // Prepare data for submission
-            const dataobj = { name: name, email: email, password: password, phone: phone, address: address };
+        // Prepare data for submission
+        const dataobj = { name: name, email: email, password: password, phone: phone, address: address };
 
-            // Send POST request
-            fetch(`http://localhost:5000/api/user/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataobj),
-            })
-                .then((res) => {
-                    if (res.ok) {
-                        navigate("/login");
-                    }
-                });
-        
+        // Send POST request
+        fetch(`http://localhost:5000/api/user/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataobj),
+        })
+            .then((res) => {
+                if (res.ok) {
+                    navigate("/login");
+                }
+            });
+
     }
 
     return (
@@ -108,7 +109,11 @@ export default function Register() {
                                         {/* Address */}
                                         <div className="mb-3 col-lg-5">
                                             <label htmlFor="address" className="form-label">Shipping Address</label>
-                                            <input value={address} onChange={(e) => SetAddress(e.target.value)} type="text" className="form-control" id="address" placeholder="Enter your address" />
+                                            <AddressAutocomplete
+                                                value={address}
+                                                onSelect={(selectedAddress) => SetAddress(selectedAddress)}
+                                                disabled={false}
+                                            />
                                         </div>
                                     </div>
 

@@ -8,6 +8,7 @@ import { FaPowerOff, FaShoppingBag } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '../redux/orderSlice';
 import { api } from '../services/api';
+import AddressAutocomplete from './AddressAutocomplete';
 
 const ProfilePage = () => {
   const [activeSection, setActiveSection] = useState('profile');
@@ -19,16 +20,16 @@ const ProfilePage = () => {
     address: '',
     id: ''
   });
-  
+
   const dispatch = useDispatch();
   const { orders, status, error } = useSelector((state) => state.order);
-  
+  console.log("orders===", orders)
   const navigate = useNavigate();
 
   const handleLogout = () => {
-      localStorage.removeItem('userId');
-      alert("logout SuccessFully");
-      navigate('/login');
+    localStorage.removeItem('userId');
+    alert("logout SuccessFully");
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const ProfilePage = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await api.updateUser(user.id, user);
       if (response) {
@@ -101,11 +102,11 @@ const ProfilePage = () => {
                     <p className="text-muted mb-1">
                       {order.items.length} items
                     </p>
-                    <small className={`fw-semibold ${
-                      order.status === 'Delivered' ? 'text-success' :
-                      order.status === 'Cancelled' ? 'text-danger' :
-                      'text-warning'
-                    }`}>
+                    <small className={`fw-semibold ${order.status === 'shipped' ? 'text-primary' :
+                        order.status === 'delivered' ? 'text-success' :
+                          order.status === 'cancelled' ? 'text-danger' :
+                            'text-warning'
+                      }`}>
                       ● {order.status}
                     </small>
                     <p className="mb-0 text-muted">
@@ -129,8 +130,8 @@ const ProfilePage = () => {
                   {order.items.map((item, index) => (
                     <div key={index} className="d-flex align-items-center mb-1">
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src={`https://fashionfizzbackend.onrender.com${item.image}`}
+                        alt='.'
                         style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 6, marginRight: 10 }}
                       />
                       <span className="me-2">{item.name}</span>
@@ -158,32 +159,32 @@ const ProfilePage = () => {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="fw-bold mb-0">Personal Information</h5>
         {
-          (!isEditing)?
-           <Button 
-          variant={isEditing ? "success" : "primary"} 
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? 'Save Changes' : 'Edit Profile'}
-        </Button>
-          :""
+          (!isEditing) ?
+            <Button
+              variant={isEditing ? "success" : "primary"}
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              {isEditing ? 'Save Changes' : 'Edit Profile'}
+            </Button>
+            : ""
         }
       </div>
       <Form onSubmit={handleUpdateProfile}>
         <Row className="mb-3 text-start">
           <Col md={6}>
             <Form.Label>Name</Form.Label>
-            <Form.Control 
+            <Form.Control
               name="name"
-              value={user.name} 
+              value={user.name}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
           </Col>
           <Col md={6}>
             <Form.Label>Email Address</Form.Label>
-            <Form.Control 
+            <Form.Control
               name="email"
-              value={user.email} 
+              value={user.email}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
@@ -192,21 +193,38 @@ const ProfilePage = () => {
         <Row className="mb-3 text-start">
           <Col md={6}>
             <Form.Label>Phone Number</Form.Label>
-            <Form.Control 
+            <Form.Control
               name="phone"
-              value={user.phone} 
+              value={user.phone}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
           </Col>
           <Col md={6}>
             <Form.Label>Address</Form.Label>
-            <Form.Control 
+            {/* <Form.Control 
               name="address"
               value={user.address} 
               onChange={handleInputChange}
               disabled={!isEditing}
-            />
+            /> */}
+            {isEditing ? (
+              <AddressAutocomplete
+                value={user.address}
+                onSelect={(address) =>
+                  setUser((prev) => ({ ...prev, address }))
+                }
+                disabled={!isEditing}
+              />
+            ) : (
+              <Form.Control
+                name="address"
+                value={user.address}
+                onChange={handleInputChange}
+                disabled
+              />
+            )}
+
           </Col>
         </Row>
         {isEditing && (
@@ -220,7 +238,7 @@ const ProfilePage = () => {
 
   return (
     <div >
-      <NavBar/>
+      <NavBar />
       <Container className="mt-5">
         <Row>
           {/* Sidebar */}
@@ -250,7 +268,7 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Container>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

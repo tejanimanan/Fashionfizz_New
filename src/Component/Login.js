@@ -9,8 +9,8 @@ export default function Login() {
 
     const UserLogin = (e) => {
         e.preventDefault();
-
-        fetch(`http://localhost:5000/api/user/login`, {
+        const API_BASE_URL = process.env.REACT_APP_API_URL;
+        fetch(`https://fashionfizzbackend.onrender.com/api/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export default function Login() {
                     navigate('/'); // Redirect to home or dashboard
                 }
                 else{
-                    navigate('/admin/adddashboard')
+                    navigate('/admin/dashboard')
                 }
             } else {
                 toast.error(data.message || 'Invalid credentials.', {

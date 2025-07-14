@@ -8,9 +8,9 @@ export default function AddProduct() {
   const [products, setProducts] = useState([]);
   const [editProduct, setEditProduct] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-
+  // const API_BASE_URL = process.env.REACT_APP_API_URL;
   const fetchProducts = async () => {
-    const res = await axios.get('http://localhost:5000/api/product/');
+    const res = await axios.get('https://fashionfizzbackend.onrender.com/api/product/');
     setProducts(res.data);
   };
 
@@ -23,7 +23,7 @@ export default function AddProduct() {
   };
   const handleDelete = async (product) => {
   try {
-    const res = await axios.delete('http://localhost:5000/api/product/' + product.id);
+    const res = await axios.delete('https://fashionfizzbackend.onrender.com/api/product/' + product.id);
     if (res.status === 200) {
       alert("Product deleted successfully");
       // Remove product from local state
@@ -65,7 +65,7 @@ export default function AddProduct() {
                 <td>{prod.size.join(', ')}</td>
                 <td>{prod.color.join(', ')}</td>
                 <td>
-                  {prod.image && <img src={`http://localhost:5000${prod.image}`}  alt="Product" width="60" height="60" />}
+                  {prod.image && <img src={`https://fashionfizzbackend.onrender.com${prod.image}`}  alt="Product" width="60" height="60" />}
                 </td>
                 <td>
                   <button className="btn btn-sm btn-success" onClick={() => handleEdit(prod)}>
