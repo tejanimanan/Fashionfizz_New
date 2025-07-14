@@ -41,11 +41,13 @@ export default function AddProductForm({ onClose }) {
     data.append('color', JSON.stringify(formData.color));
     data.append('image', imageFile);
 
-    await axios.post('http://localhost:5000/api/product/', data, {
+    const response = await axios.post('http://localhost:5000/api/product/', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
+      
+    console.log("add product==",response.data.message)
 
     onClose();
   };

@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { api } from '../services/api';
 
 export default function Users() {
-  const users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Customer' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Customer' },
-  ];
-
+  // const users = [
+  //   { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Customer' },
+  //   { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Customer' },
+  // ];
+  const [user,SetUser] = useState([])
+  useEffect(() => {
+      fetchUser();
+    }, []);
+  
+    const fetchUser = async () => {
+      try {
+        const response = await api.getAllUser();
+        SetUser(response);  
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
   return (
     <div className="user-bg py-4">
       <div className="container-fluid">
@@ -25,15 +38,15 @@ export default function Users() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {user.map((user) => (
                 <tr key={user.id}>
                   <td><span className="badge bg-secondary">{user.id}</span></td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td><span className="badge bg-success">{user.role}</span></td>
+                  <td><span className="badge bg-success">{user.role?user.role:"Customer"}</span></td>
                 </tr>
               ))}
-              {users.length === 0 && (
+              {user.length === 0 && (
                 <tr>
                   <td colSpan="4" className="text-center text-muted">
                     No users found.

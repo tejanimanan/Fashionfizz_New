@@ -15,7 +15,7 @@ export const updateCartItemQuantity = createAsyncThunk(
   async ({ itemId, quantity, currentItem }) => {
     // The API might need the full item object or just ID and quantity
     const updatedItem = { ...currentItem, quantity };
-    const response = await fetch(`${process.env.REACT_APP_API_URL}cart/${itemId}`, {
+    const response = await fetch(`http://localhost:5000/api/cart/${itemId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedItem),

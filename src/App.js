@@ -78,8 +78,9 @@ const AppWithRouter = () => {
             <Route path='/' element={<Home />} />
 
             {/* admin side */}
+              <Route path='/admin' element={<Login />} />
             <Route path='/admin' element={<AdminMain />}>
-              <Route index element={<AdminDashboard />} />
+              <Route path='adddashboard' element={<AdminDashboard />} />
               <Route path='addproduct' element={<AddProduct />} />
               <Route path="orders" element={<Orders />} />
               <Route path="users" element={<Users />} />

@@ -14,7 +14,7 @@ export default function Cart() {
     const { items: product, status, error } = useSelector((state) => state.cart);
     const [cartQuantities, SetCartQuantities] = useState({});
     const [showOrderModal, setShowOrderModal] = useState(false);
-    const [deliveryAddress, setDeliveryAddress] = useState('');
+    const [deliveryAddress, setDeliveryAddress] = useState('  ');
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const [user, setUser] = useState(null);
     const userId = localStorage.getItem('userId');
@@ -29,7 +29,7 @@ export default function Cart() {
             api.getUserById(userId)
                 .then(data => {
                     setUser(data);
-                    setDeliveryAddress(data.address || '');
+                    setDeliveryAddress(data.address[0] || ' ');
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error);
@@ -175,7 +175,7 @@ export default function Cart() {
                                             <div className="d-flex flex-column align-items-center">
                                                 {/* Image */}
                                                 <div className="mb-2 text-center">
-                                                    <img src={v.image} className="img-fluid rounded" style={{ width: "100px", height: "100px", objectFit: "cover" }} alt={v.name} />
+                                                    <img src={`http://localhost:5000${v.image}`} className="img-fluid rounded" style={{ width: "100px", height: "100px", objectFit: "cover" }} alt={v.name} />
                                                 </div>
                                                 {/* Details */}
                                                 <div className="flex-grow-1 w-100">

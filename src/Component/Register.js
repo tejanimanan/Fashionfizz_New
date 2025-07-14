@@ -18,15 +18,6 @@ export default function Register() {
 
     const HandleSubmit = (e) => {
         e.preventDefault()
-        let obj = { name, email, password, conPass, phone, address };
-        const API_URL = process.env.REACT_APP_API_URL;
-        fetch(`${API_URL}user`).then((res) => res.json()).then((data) => {
-            // Check if email already exists
-            const emailExists = data.some((v) => v.email === email);
-            if (emailExists) {
-                alert("Email already exists");
-                return;
-            }
 
             // Validations
             if (!name.trim()) {
@@ -45,17 +36,17 @@ export default function Register() {
                 alert("Enter Password");
                 return;
             }
-            if (!passwordRegex.test(password)) {
-                console.log(password)
-                alert("Password must be at least 6 characters, contain 1 special character & 1 number");
-                return;
-            }
+            // if (!passwordRegex.test(password)) {
+            //     console.log(password)
+            //     alert("Password must be at least 6 characters, contain 1 special character & 1 number");
+            //     return;
+            // }
 
             // Prepare data for submission
             const dataobj = { name: name, email: email, password: password, phone: phone, address: address };
 
             // Send POST request
-            fetch(`${API_URL}user`, {
+            fetch(`http://localhost:5000/api/user/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dataobj),
@@ -65,7 +56,7 @@ export default function Register() {
                         navigate("/login");
                     }
                 });
-        });
+        
     }
 
     return (
