@@ -9,7 +9,6 @@ export default function Login() {
 
     const UserLogin = (e) => {
         e.preventDefault();
-        const API_BASE_URL = process.env.REACT_APP_API_URL;
         fetch(`https://fashionfizzbackend.onrender.com/api/user/login`, {
             method: "POST",
             headers: {
@@ -31,9 +30,10 @@ export default function Login() {
                     transition: Slide,
                 });
                 console.log("login user==",data.user)
-                localStorage.setItem('userId', data.user.id); // Store user ID
+                localStorage.setItem('userId', data.user.id);
+                localStorage.setItem('user', JSON.stringify(data.user));
+ // Store user ID
                 if(data.user.role == "customer"){
-
                     navigate('/'); // Redirect to home or dashboard
                 }
                 else{

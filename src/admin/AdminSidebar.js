@@ -12,7 +12,7 @@ const Sidebar = () => {
     { to: '/admin/addproduct', label: 'All Product', icon: <FaBoxOpen /> },
     { to: '/admin/orders', label: 'View Orders', icon: <FaClipboardList /> },
     { to: '/admin/users', label: 'All Users', icon: <FaUsers /> },
-    { to: '/manage-password', label: 'Manage Password', icon: <FaKey /> },
+    // { to: '/manage-password', label: 'Manage Password', icon: <FaKey /> },
   ];
 
   return (

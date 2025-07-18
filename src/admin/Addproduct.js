@@ -35,9 +35,9 @@ export default function AddProduct() {
   }
 };
   return (
-    <div className="container my-4">
+    <div className="container my-4 shadow-lg roundend-4  p-4 ">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>Product List</h3>
+        <h3 className='fw-bold'>Product List</h3>
         <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>
           Add Product
         </button>

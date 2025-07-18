@@ -10,6 +10,7 @@ import AddProduct from './admin/Addproduct';
 import Orders from './admin/Order';
 import Users from './admin/User';
 import AdminMain from './admin/AdminMain';
+import ProtectedRoute from './ProtectedRoute';
 
 // Lazy-loaded components
 const About = lazy(() => import('./Component/About'));
@@ -73,34 +74,39 @@ const AppWithRouter = () => {
       <div className='' style={{ display: (loading) ? "none" : "block" }}>
         <Suspense fallback={<Loader />}>
           <Routes>
+            {/* Public Routes */}
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Home />} />
-
-            {/* admin side */}
-              <Route path='/admin' element={<Login />} />
-            <Route path='/admin' element={<AdminMain />}>
-              <Route path='dashboard' element={<AdminDashboard />} />
-              <Route path='addproduct' element={<AddProduct />} />
-              <Route path="orders" element={<Orders />} />
-              <Route path="users" element={<Users />} />
-            </Route>
-            {/* admin side */}
-
+            <Route path='/about' element={<About />} />
+            <Route path='/contact' element={<Contact />} />
             <Route path='/shop' element={<Shop />}>
               <Route index element={<AllProduct />} />
               <Route path='women' element={<WomenProduct />} />
               <Route path='men' element={<MenProduct />} />
               <Route path='Accessories' element={<BagProduct />} />
             </Route>
-
-            <Route path='/about' element={<About />} />
-            <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/contact' element={<Contact />} />
             <Route path='/singleproduct/:id' element={<SingleProduct />} />
-            <Route path='/cart' element={<Cart />} />
+
+            {/* Protected Route for customer */}
+            <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
+              <Route path='/profile' element={<ProfilePage />} />
+              <Route path='/cart' element={<Cart />} />
+            </Route>
+
+            {/* Protected Route for admin */}
+            <Route path='/admin' element={<Login />} /> {/* Public admin login */}
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+              <Route path='/admin' element={<AdminMain />}>
+                <Route path='dashboard' element={<AdminDashboard />} />
+                <Route path='addproduct' element={<AddProduct />} />
+                <Route path='orders' element={<Orders />} />
+                <Route path='users' element={<Users />} />
+              </Route>
+            </Route>
           </Routes>
         </Suspense>
+
       </div>
       <ToastContainer />
     </div>
